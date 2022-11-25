@@ -1,0 +1,31 @@
+For the number or employees in each territory and territory regions:
+--------------------------------------------------------------------------------------------
+
+select 
+  t.TerritoryDescription as Territories, 
+  r.RegionDescription as 'Territory Region', 
+  count(e.EmployeeID) as 'Number of Employees'
+from Employees e
+  join EmployeeTerritories et on et.EmployeeID = e.EmployeeID
+  join Territories t on t.TerritoryID = et.TerritoryID 
+  join Regions r on r.RegionID = t.RegionID
+group by t.territorydescription;
+
+--------------------------------------------------------------------------------------------
+
+For the employee performances according to sales
+--------------------------------------------------------------------------------------------
+
+select e.FirstName, e.LastName, sum(o.OrderID*od.Quantity) as 'Total Sale Amounts', 
+ case 
+	when sum(o.OrderID*od.Quantity) > 80000000 THEN 'High'
+	when sum(o.OrderID*od.Quantity) > 40000000 THEN 'Average'
+	ELSE 'Low'
+end as Performance
+from orders o
+join Employees e on e.EmployeeID = o.EmployeeID
+join "Order Details" od on od.OrderID = o.OrderID 
+group by e.FirstName 
+order by sum(o.OrderID*od.Quantity) desc;
+
+--------------------------------------------------------------------------------------------
