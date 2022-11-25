@@ -1,0 +1,14 @@
+--this week tasks:
+--1- find number of territories that every employee responsible for 
+--2-find the shipping period for top selling products to the low sales 
+--regions in order to provide a comparison and find if there is a reason for low sales because of shipping delay 
+
+--team leader : tarik
+
+--the number of territories every employee is responsible FOR 
+
+SELECT e.EmployeeID, FirstName || ' ' || LastName AS EmployeeName, COUNT(TerritoryID) 
+FROM Employees e 
+INNER JOIN EmployeeTerritories
+USING(EmployeeID)
+GROUP BY EmployeeID;
